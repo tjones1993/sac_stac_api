@@ -4,30 +4,27 @@ version: '3'
 services:
 
   db:
-#    image: postgis/postgis:latest
+#    image: ssgp-database-clean:latest
+#    command: su -u -c "/usr/local/pgsql/bin/pg_ctl -D /usr/local/pgsql/data start" -s /bin/sh postgres
+#    command: su postgres -c "/usr/local/pgsql/bin/pg_ctl -D /usr/local/pgsql/data start"
+#    user: postgres
     build:
       context: ./
-      dockerfile: Dockerfile-dev
-    restart: always
-#    environment:
-#      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-#      - LOGLEVEL=DEBUG
-#      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
-#      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
-#      - AWS_S3_ENDPOINT_URL=${AWS_S3_ENDPOINT_URL}
+      dockerfile: Dockerfile-db
+    container_name: db
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    restart: on-failure
+    volumes:
+      - ./:/opt/notebooks
 #    ports:
-#      - "8877:8888"
-#    volumes:
-#      - ./:/opt/notebooks
-
-
-#  adminer:
-#    image: adminer
-#    restart: always
-#    ports:
-#      - 8080:8080
+#      - 5432:5432
       
-#  pygeoapi:
-#    image: geopython/pygeoapi:latest
-#    volumes:
-#      - ./my.config.yml:/pygeoapi/local.config.yml
+  pygeoapi:
+    container_name: pygeoapi
+    image: geopython/pygeoapi:latest
+    volumes:
+      - C:\Users\tom.jones\Documents\GitHub\sac_stac_api\pygeoapi-config.yml:/pygeoapi/local.config.yml
+    restart: on-failure
+    ports: 
+      - 5000:80
