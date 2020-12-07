@@ -17,14 +17,25 @@ services:
     restart: on-failure
     volumes:
       - ./:/opt/notebooks
-#    ports:
-#      - 5432:5432
+    ports:
+      - 5432:5432
       
-  pygeoapi:
-    container_name: pygeoapi
-    image: geopython/pygeoapi:latest
-    volumes:
-      - C:\Users\tom.jones\Documents\GitHub\sac_stac_api\pygeoapi-config.yml:/pygeoapi/local.config.yml
-    restart: on-failure
-    ports: 
-      - 5000:80
+#  pygeoapi:
+#    container_name: pygeoapi
+#    build:
+#      context: ./
+#      dockerfile: Dockerfile-api
+##    image: geopython/pygeoapi:latest
+#    depends_on: 
+#      - "db"
+#    environment:
+#      - WAIT_HOSTS=db:5432
+#      - WAIT_HOSTS_TIMEOUT=300
+#      - WAIT_SLEEP_INTERVAL=30
+#      - WAIT_HOST_CONNECT_TIMEOUT=30
+##    command: ["/usr/src/app/wait-for", "db:5432"]
+##    volumes:
+##      - C:\Users\tom.jones\Documents\GitHub\sac_stac_api\pygeoapi-config.yml:/pygeoapi/local.config.yml
+#    restart: on-failure
+#    ports: 
+#      - 5000:80

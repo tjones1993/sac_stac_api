@@ -227,7 +227,7 @@ resources:
               type: feature
               data: 
 #                    host: 10.154.0.3
-                    host: 0.0.0.0
+                    host: db
 #                    host: 127.0.0.1
                     dbname: ssgp                    
                     user: root
